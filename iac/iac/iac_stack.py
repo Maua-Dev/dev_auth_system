@@ -5,15 +5,12 @@ from aws_cdk import (
 )
 from constructs import Construct
 
+from .cognito_stack import CognitoStack
+
+
 class IacStack(Stack):
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        # The code that defines your stack goes here
-
-        # example resource
-        # queue = sqs.Queue(
-        #     self, "IacQueue",
-        #     visibility_timeout=Duration.seconds(300),
-        # )
+        self.cognito = CognitoStack(self, 'CognitoStack')

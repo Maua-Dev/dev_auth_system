@@ -8,6 +8,9 @@ from iac.iac_stack import IacStack
 
 app = cdk.App()
 
+from dotenv import load_dotenv
+load_dotenv()
+
 aws_region = os.environ.get("AWS_REGION")
 aws_account_id = os.environ.get("AWS_ACCOUNT_ID")
 stack_name = os.environ.get("STACK_NAME")
@@ -27,7 +30,8 @@ else:
 tags = {
     'project': 'AuthDev',
     'stage': stage,
-    'stack': 'BACK'
+    'stack': 'BACK',
+    'owner': 'DevCommunity',
 }
 
 IacStack(app, stack_name, env=cdk.Environment(account=aws_account_id, region=aws_region), tags=tags)
