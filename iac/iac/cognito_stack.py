@@ -12,19 +12,27 @@ class CognitoStack(Construct):
         super().__init__(scope, construct_id, **kwargs)
 
         self.user_pool = aws_cognito.UserPool(self, "auth_dev_user_pool",
-                                         removal_policy=RemovalPolicy.DESTROY,
-                                         self_sign_up_enabled=True,
-                                         auto_verify=aws_cognito.AutoVerifiedAttrs(email=True),
-                                         user_verification=aws_cognito.UserVerificationConfig(
-                                             email_subject="Bem Vindo ao Sistema de Autenticação da Dev. Community Mauá",
-                                             email_body="Olá, {username}! Seja bem vindo ao sistema de autenticação da Dev. Community Mauá. Clique no link abaixo para confirmar seu cadastro. {##Verify Email##}",
-                                             email_style=aws_cognito.VerificationEmailStyle.LINK),
-                                         standard_attributes=aws_cognito.StandardAttributes(
-                                             email=aws_cognito.StandardAttribute(
-                                                 required=True,
-                                                 mutable=False
-                                             )),
-                                        )
+                                              removal_policy=RemovalPolicy.DESTROY,
+                                              self_sign_up_enabled=True,
+                                              auto_verify=aws_cognito.AutoVerifiedAttrs(email=True),
+                                              user_verification=aws_cognito.UserVerificationConfig(
+                                                  email_subject="Bem Vindo ao Sistema de Autenticação da Dev. Community Mauá",
+                                                  email_body="Olá!\nSeja bem vindo ao sistema de autenticação da Dev. Community Mauá. Clique no link abaixo para confirmar seu cadastro.\n{##Verify Email##}",
+                                                  email_style=aws_cognito.VerificationEmailStyle.LINK),
+                                              standard_attributes=aws_cognito.StandardAttributes(
+                                                  email=aws_cognito.StandardAttribute(
+                                                      required=True,
+                                                      mutable=True
+                                                  ),
+                                                  fullname=aws_cognito.StandardAttribute(
+                                                        required=True,
+                                                        mutable=True
+                                                  ),
+                                              ),
+                                              sign_in_aliases=aws_cognito.SignInAliases(
+                                                  email=True
+                                              ),
+                                              )
 
         self.client = self.user_pool.add_client("auth_dev_client",
                                                 auth_flows=aws_cognito.AuthFlow(
@@ -36,7 +44,6 @@ class CognitoStack(Construct):
                                                 generate_secret=False,
                                                 o_auth=aws_cognito.OAuthSettings(
                                                     flows=aws_cognito.OAuthFlows(
-                                                        authorization_code_grant=True,
                                                         implicit_code_grant=True
                                                     ),
                                                     scopes=[
@@ -51,15 +58,8 @@ class CognitoStack(Construct):
                                                 ),
                                                 )
 
-
         self.domain = self.user_pool.add_domain("authdevmaua",
-                                    cognito_domain=aws_cognito.CognitoDomainOptions(
-                                        domain_prefix="authdevmaua"
-                                    )
-                                )
-
-
-
-
-
-
+                                                cognito_domain=aws_cognito.CognitoDomainOptions(
+                                                    domain_prefix="authdevmaua"
+                                                )
+                                                )
