@@ -8,9 +8,6 @@ from iac.iac_stack import IacStack
 
 app = cdk.App()
 
-from dotenv import load_dotenv
-load_dotenv()
-
 aws_region = os.environ.get("AWS_REGION")
 aws_account_id = os.environ.get("AWS_ACCOUNT_ID")
 stack_name = os.environ.get("STACK_NAME")
