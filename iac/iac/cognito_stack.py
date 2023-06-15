@@ -17,8 +17,8 @@ class CognitoStack(Construct):
                                               auto_verify=aws_cognito.AutoVerifiedAttrs(email=True),
                                               user_verification=aws_cognito.UserVerificationConfig(
                                                   email_subject="Bem Vindo ao Sistema de Autenticação da Dev. Community Mauá",
-                                                  email_body="Olá!\nSeja bem vindo ao sistema de autenticação da Dev. Community Mauá. Clique no link abaixo para confirmar seu cadastro.\n{##Verify Email##}",
-                                                  email_style=aws_cognito.VerificationEmailStyle.LINK),
+                                                  email_body="Olá!\nSeja bem vindo ao sistema de autenticação da Dev. Community Mauá. Seu código de cadastro é: {####}",
+                                                  email_style=aws_cognito.VerificationEmailStyle.CODE),
                                               standard_attributes=aws_cognito.StandardAttributes(
                                                   email=aws_cognito.StandardAttribute(
                                                       required=True,
