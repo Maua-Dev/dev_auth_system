@@ -31,7 +31,7 @@ class CognitoStack(Construct):
                                               ),
                                               custom_attributes={
                                                  "isMaua": aws_cognito.BooleanAttribute(mutable=False)
-                                              }
+                                              },
                                               sign_in_aliases=aws_cognito.SignInAliases(
                                                   email=True
                                               ),
