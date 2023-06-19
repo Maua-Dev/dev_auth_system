@@ -1,3 +1,5 @@
+import os
+
 from constructs import Construct
 
 from aws_cdk import (
@@ -11,7 +13,9 @@ class CognitoStack(Construct):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        self.user_pool = aws_cognito.UserPool(self, "auth_dev_user_pool",
+        github_ref = os.environ.get("GITHUB_REF_NAME")
+
+        self.user_pool = aws_cognito.UserPool(self, f"auth_dev_user_pool_{github_ref}",
                                               removal_policy=RemovalPolicy.DESTROY,
                                               self_sign_up_enabled=True,
                                               auto_verify=aws_cognito.AutoVerifiedAttrs(email=True),
@@ -37,7 +41,7 @@ class CognitoStack(Construct):
                                               ),
                                               )
 
-        self.client = self.user_pool.add_client("auth_dev_client",
+        self.client = self.user_pool.add_client(f"auth_dev_client_{github_ref}",
                                                 auth_flows=aws_cognito.AuthFlow(
                                                     admin_user_password=True,
                                                     custom=True,
@@ -61,7 +65,7 @@ class CognitoStack(Construct):
                                                 ),
                                                 )
 
-        self.domain = self.user_pool.add_domain("authdevmaua",
+        self.domain = self.user_pool.add_domain(f"authdevmaua-{github_ref}",
                                                 cognito_domain=aws_cognito.CognitoDomainOptions(
                                                     domain_prefix="authdevmaua"
                                                 )
