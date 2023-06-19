@@ -13,7 +13,7 @@ class CognitoStack(Construct):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        github_ref = os.environ.get("GITHUB_REF")
+        github_ref = os.environ.get("GITHUB_REF_NAME")
 
         self.user_pool = aws_cognito.UserPool(self, f"auth_dev_user_pool_{github_ref}",
                                               removal_policy=RemovalPolicy.DESTROY,
