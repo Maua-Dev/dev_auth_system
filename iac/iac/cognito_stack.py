@@ -49,24 +49,4 @@ class CognitoStack(Construct):
                                                     user_srp=True
                                                 ),
                                                 generate_secret=False,
-                                                o_auth=aws_cognito.OAuthSettings(
-                                                    flows=aws_cognito.OAuthFlows(
-                                                        implicit_code_grant=True
-                                                    ),
-                                                    scopes=[
-                                                        aws_cognito.OAuthScope.EMAIL,
-                                                        aws_cognito.OAuthScope.OPENID,
-                                                        aws_cognito.OAuthScope.PROFILE,
-                                                        aws_cognito.OAuthScope.COGNITO_ADMIN
-                                                    ],
-                                                    callback_urls=[
-                                                        "https://devmaua.com"
-                                                    ]
-                                                ),
-                                                )
-
-        self.domain = self.user_pool.add_domain(f"authdevmaua-{github_ref}",
-                                                cognito_domain=aws_cognito.CognitoDomainOptions(
-                                                    domain_prefix="authdevmaua"
-                                                )
                                                 )
