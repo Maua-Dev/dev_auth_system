@@ -17,7 +17,7 @@ class IacStack(Stack):
 
         github_ref = os.environ.get("GITHUB_REF_NAME")
 
-        self.cognito = CognitoStack(self, f'auth_dev_cognito_stack_{github_ref}')
+        self.cognito_stack = CognitoStack(self, f'auth_dev_cognito_stack_{github_ref}')
 
         custom_message_function = lambda_.Function(
             self, "custom_message_function",
