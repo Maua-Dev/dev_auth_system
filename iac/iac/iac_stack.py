@@ -1,3 +1,5 @@
+import os
+
 from aws_cdk import (
     # Duration,
     Stack,
@@ -13,4 +15,6 @@ class IacStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        self.cognito = CognitoStack(self, 'CognitoStack')
+        github_ref = os.environ.get("GITHUB_REF")
+
+        self.cognito = CognitoStack(self, f'auth_dev_cognito_stack_{github_ref}')
